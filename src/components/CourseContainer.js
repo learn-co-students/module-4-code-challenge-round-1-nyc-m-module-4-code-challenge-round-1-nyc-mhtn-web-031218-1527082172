@@ -7,18 +7,51 @@ class CourseContainer extends Component {
   state = {
     students: [],
     currentCourse: {},
-    currentStudent: {}
+    currentStudent: {},
+    query: ''
   };
 
+  componentDidMount(){
+    fetch('https://bayside-high.herokuapp.com/api/v1/users/98/courses/385')
+    .then(resp => resp.json())
+    .then(data => {
+      this.setState({
+        students: data.students
+      })
+  })
+}
+
+mainData = (e) => {
+   this.setState({
+     currentCourse: e.target.value
+   })
+}
+
+
+
+// studentSearch = () => {
+//   this.state.students.filter)
+// }
+// //
+// handleSearch = (e) => {
+//     this.setState({
+//       query: e.target.value
+//     })
+// }
+
   render() {
+    console.log(this.state.currentCourse)
     return (
       <div className="ui grid container">
         <div className="ui center aligned header sixteen wide column">
-          {/* Course Title Here */}
-          Course Title
+          Title: This sucks
         </div>
 
-        <CourseSelector />
+        <CourseSelector
+          courseData={this.props.courses}
+          mainData={this.mainData}
+          currentCourse={this.state.currentCourse}
+        />
 
         {/* Edit Form */}
         <form
@@ -30,8 +63,8 @@ class CourseContainer extends Component {
               <input
                 id="name"
                 type="text"
-                value={""}
-                onChange={"your code here"}
+                value={this.state.query}
+                onChange={this.handleSearch}
               />
             </div>
             <div className="four wide field">
@@ -56,7 +89,10 @@ class CourseContainer extends Component {
           </div>
         </form>
 
-        <StudentsList />
+        <StudentsList
+          students={this.state.students}
+        />
+      
       </div>
     );
   }
