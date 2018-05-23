@@ -1,14 +1,13 @@
 import React from "react";
-import courseList from "../courseList";
 
-const CourseSelector = () => {
+const CourseSelector = (props) => {
   return (
     <div className="sixteen wide column">
-      <select className="ui dropdown">
-        {courseList.map((course, i) => {
+      <select className="ui dropdown" value={props.currentCourse} onChange={props.mainData}>
+        {props.courseData.map((props, i) => {
           return (
-            <option key={i} className="item" data-value={course.id}>
-              {course.name}
+            <option key={i} className="item" data-value={props.id}>
+              {props.name}
             </option>
           );
         })}
