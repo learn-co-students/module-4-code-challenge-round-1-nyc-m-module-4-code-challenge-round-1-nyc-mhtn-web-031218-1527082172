@@ -12,6 +12,7 @@ class CourseContainer extends Component {
   };
 
 
+
       componentDidMount(){
         fetch("https://bayside-high.herokuapp.com/api/v1/users/86/courses")
         .then(response => {
@@ -23,12 +24,32 @@ class CourseContainer extends Component {
         })
       }
 
+
+
       handleChange = (event) => {
-          console.log(event.target.value)
+
         this.setState({
           currentCourse: event.target.value
         })
       }
+
+      // getStudents = (this.currentCourse.id) => {
+      //     //here we need to get the students for the current matching course. fetch the students to the cooresponding course
+      //   if(this.state.currentCourse){
+      //     componentDidMount(){
+      //       fetch("https://bayside-high.herokuapp.com/api/v1/users/86/courses/{this.state.currentCourse.id}")
+      //       .then(response => {
+      //         return response.json()
+      //       }).then(res => {
+      //           console.log(res)
+      //           this.setState({students: res })
+      //
+      //       })
+      //     }
+      //   }
+      // }
+
+
 
 
   render() {
@@ -80,7 +101,7 @@ class CourseContainer extends Component {
           </div>
         </form>
 
-        <StudentsList />
+        <StudentsList students= {this.state.students}/>
       </div>
     );
   }

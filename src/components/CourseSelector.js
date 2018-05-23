@@ -9,9 +9,12 @@ const CourseSelector = (props) => {
     <div className="sixteen wide column">
       <select onChange={props.handleChange} className="ui dropdown">
         {props.courses.map((course, i) => {
+          console.log(course.id)
           return (
+
             <option key={i} className="item" data-value={course.id}>
               {course.name}
+
             </option>
           );
         })}
