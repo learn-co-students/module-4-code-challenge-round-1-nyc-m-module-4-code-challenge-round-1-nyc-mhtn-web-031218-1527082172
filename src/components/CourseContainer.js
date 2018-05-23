@@ -9,16 +9,20 @@ class CourseContainer extends Component {
     currentCourse: {},
     currentStudent: {}
   };
-
+  handleCourseChange = (course) => {
+    this.setState({
+      currentCourse: course
+    })
+  }
   render() {
+    console.log(this.state.currentCourse)
     return (
       <div className="ui grid container">
         <div className="ui center aligned header sixteen wide column">
-          {/* Course Title Here */}
-          Course Title
+          {this.state.currentCourse.name}
         </div>
 
-        <CourseSelector />
+        <CourseSelector handleSelect={this.handleCourseChange}/>
 
         {/* Edit Form */}
         <form
