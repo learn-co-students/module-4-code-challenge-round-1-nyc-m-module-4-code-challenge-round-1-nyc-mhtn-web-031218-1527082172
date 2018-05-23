@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CourseSelector from "./CourseSelector";
 import StudentsList from "./StudentsList";
 import courseList from "../courseList";
+import EditForm from "./EditForm"
 
 class CourseContainer extends Component {
   state = {
@@ -13,9 +14,30 @@ class CourseContainer extends Component {
     this.setState({
       currentCourse: course
     })
+    this.updateStudentState(course.id)
+  }
+  updateStudentState = (courseId) => {
+    fetch(`https://bayside-high.herokuapp.com/api/v1/users/91/courses/`+ courseId)
+    .then(resp=>resp.json())
+    .then(resp=>{
+      this.setState({
+        students: resp
+      })
+    })
+  }
+  updateCurrentStudent = (student) => {
+    this.setState({
+      currentStudent: student
+    })
+  }
+  onSubmit = (editstudent) => {
+    let index = this.state.students.indexOf(student=>student.id===editstudent.id)
+    this.setState({
+      students: [...this.state.students.slice(0,index), editstudent, ...this.state.students.slice(index+1)]
+    })
   }
   render() {
-    console.log(this.state.currentCourse)
+    console.log(this.state.students)
     return (
       <div className="ui grid container">
         <div className="ui center aligned header sixteen wide column">
@@ -24,43 +46,10 @@ class CourseContainer extends Component {
 
         <CourseSelector handleSelect={this.handleCourseChange}/>
 
-        {/* Edit Form */}
-        <form
-          className="ui form center aligned sixteen wide column"
-          onSubmit={""}
-        >
-          <div className="inline fields">
-            <div className="four wide field">
-              <input
-                id="name"
-                type="text"
-                value={""}
-                onChange={"your code here"}
-              />
-            </div>
-            <div className="four wide field">
-              <input
-                id="class_year"
-                type="number"
-                value={""}
-                onChange={"your code here"}
-              />
-            </div>
-            <div className="four wide field">
-              <input
-                id="percentage"
-                type="number"
-                value={""}
-                onChange={"your code here"}
-              />
-            </div>
-            <button className="ui button" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
+        <EditForm student={this.state.currentStudent} onSubmit={this.onSubmit}/>
 
-        <StudentsList />
+
+        <StudentsList students={this.state.students.students} focusStudent={this.updateCurrentStudent}/>
       </div>
     );
   }
