@@ -7,6 +7,7 @@ class CourseContainer extends Component {
   state = {
     students: [],
     currentCourse: [],
+    courses: [],
     currentStudent: {}
   };
 
@@ -17,27 +18,31 @@ class CourseContainer extends Component {
           return response.json()
         }).then(res => {
             console.log(res)
-            this.setState({currentCourse: res })
+            this.setState({courses: res })
 
         })
       }
 
-
+      handleChange = (event) => {
+          console.log(event.target.value)
+        this.setState({
+          currentCourse: event.target.value
+        })
+      }
 
 
   render() {
 
-    const course = this.state.currentCourse.map((course) => {course.name})
+    const course = this.state.courses.map((course) => {course.name})
 
 
     return (
       <div className="ui grid container">
         <div className="ui center aligned header sixteen wide column">
-            {course}
-          Course Title
+            {this.state.currentCourse}
         </div>
 
-        <CourseSelector  currentCourse= {this.state.currentCourse}/>
+        <CourseSelector  courses= {this.state.courses} handleChange = {this.handleChange}/>
 
         {/* Edit Form */}
         <form
