@@ -6,19 +6,38 @@ import courseList from "../courseList";
 class CourseContainer extends Component {
   state = {
     students: [],
-    currentCourse: {},
+    currentCourse: [],
     currentStudent: {}
   };
 
+
+      componentDidMount(){
+        fetch("https://bayside-high.herokuapp.com/api/v1/users/86/courses")
+        .then(response => {
+          return response.json()
+        }).then(res => {
+            console.log(res)
+            this.setState({currentCourse: res })
+
+        })
+      }
+
+
+
+
   render() {
+
+    const course = this.state.currentCourse.map((course) => {course.name})
+
+
     return (
       <div className="ui grid container">
         <div className="ui center aligned header sixteen wide column">
-          {/* Course Title Here */}
+            {course}
           Course Title
         </div>
 
-        <CourseSelector />
+        <CourseSelector  currentCourse= {this.state.currentCourse}/>
 
         {/* Edit Form */}
         <form
