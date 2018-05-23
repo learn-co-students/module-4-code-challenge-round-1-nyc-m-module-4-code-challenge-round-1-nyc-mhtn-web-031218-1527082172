@@ -1,14 +1,16 @@
 import React from 'react'
 
-const Student = () => {
-
+const Student = ({student, focus}) => {
+  const handleClick = () => {
+    focus(student)
+  }
   return (
     <tr>
-      <td>"...your code here"</td>
-      <td>"...your code here"</td>
-      <td>"...your code here"</td>
+      <td>{student.name}</td>
+      <td>{student.class_year}</td>
+      <td>{student.percentage}</td>
       <td>
-        <button className="ui button left">
+        <button className="ui button left" onClick={handleClick}>
           Edit
         </button>
       </td>
